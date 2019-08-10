@@ -72,14 +72,58 @@ class FindMissingInteger {
     return vec.at(j) - vec.at(i) != j - i;
   }
 };
+
 // 2. Rotate a one-dimensional vector of N elements left by i positions. Can you
 // rotate the vector in time proprotional to N using only a few dozen extra bytes
 // of storage?
-// 3. Given a dictionary of words, find all sets of anagrams.
+class RotateVector {
+ public:
+  RotateVector() {
+    input_ = std::vector<int>(10);
+    std::iota(input_.begin(), input_.end(), 0);
+  }
 
+  void Run() {
+    for (int value : input_) printf("%d ", value);
+    printf("\n");
+    Rotate(&input_, 3);
+    for (int value : input_) printf("%d ", value);
+    printf("\n");
+  }
+
+ private:
+  std::vector<int> input_;
+
+  void Rotate(std::vector<int>* vec, int rotate_num) {
+    assert(vec != nullptr);
+    rotate_num = rotate_num % vec->size();
+    FlipBackwards(vec, 0, rotate_num - 1);
+    FlipBackwards(vec, rotate_num, vec->size() - 1);
+    FlipBackwards(vec, 0, vec->size() - 1);
+  }
+
+  void FlipBackwards(std::vector<int>* vec, int i, int j) {
+    assert(i <= j && i >= 0 && j < vec->size());
+    for (int k = 0; k < (j - i) / 2; ++k) {
+      Swap(&vec->at(i + k), &vec->at(j - k));
+    }
+  }
+
+  void Swap(int* a, int* b) {
+    assert (a != nullptr && b != nullptr);
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+  }
+};
 
 int main(int argc, char** argv) {
+  printf("--1--\n");
   auto find_missing_integer = FindMissingInteger();
   find_missing_integer.Run();
+
+  printf("--2--\n");
+  auto rotate_vector = RotateVector();
+  rotate_vector.Run();
   return 0;
 }
