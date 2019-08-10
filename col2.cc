@@ -39,7 +39,7 @@ class FindMissingInteger {
   void Run() {
     std::sort(input_.begin(), input_.end());
 
-    int result = INT_MIN;
+    int result = INT32_MIN;
     int i = 0;
     int j = input_.size() - 1;
 
